@@ -6,10 +6,19 @@ DB_PASS:=
 DB_NAME:=
 SLOW_QUERY_LOG:=/tmp/mysql-slow.sql
 
-PROJECT_ROOT:=/home/isucon/isucari
-BUILD_DIR:=$(PROJECT_ROOT)/webapp/go
-BIN_NAME:=isucari
-SERVICE:=isucari.golang
+PROJECT_ROOT=/home/isucon/isucari
+BUILD_DIR=$(PROJECT_ROOT)/webapp/go
+BIN_NAME=isucari
+SERVICE=isucari.golang
+
+SETTING=./setting
+FILE=
+.PHONY: settingfile_to_git
+settingfile_to_git:
+	mkdir -p $(OUTDIR)
+	sudo cp $(FILE) $(OUTDIR)/$${FILE##*/}
+	sudo rm $(FILE)
+	sudo ln -s $(OUTDIR)/$${FILE##*/} $(FILE)
 
 .PHONY: mysql
 mysql:
