@@ -4,6 +4,7 @@ DB_PORT:=3306
 DB_USER:=
 DB_PASS:=
 DB_NAME:=
+SLOW_QUERY_LOG:=/tmp/mysql-slow.sql
 
 PROJECT_ROOT:=/home/isucon/isucari
 BUILD_DIR:=$(PROJECT_ROOT)/webapp/go
@@ -34,3 +35,17 @@ myprofiler_istall:
 	rm myprofiler.linux_amd64.tar.gz
 	sudo mv myprofiler /usr/local/bin/
 	sudo chmod +x /usr/local/bin/myprofiler
+	
+.PHONY: slowquerylog
+slowquerylog:
+	mysqldumpslow -s t $(SLOW_QUERY_LOG)
+	
+.PHONY: slowquerylog_edit
+slowquerylog_edit:
+	sudo vim /etc/mysql/my.cnf
+	
+.PHONY: slowquerylog_clear
+slowquerylog_clear:
+	sudo systemctl stop mysql
+	sudo mv $(SLOW_QUERY_LOG) $(SLOW_QUERY_LOG)_copy
+	sudo systemctl start mysql
