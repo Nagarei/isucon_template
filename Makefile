@@ -31,7 +31,7 @@ log:
 
 .PHONY: pprof
 pprof:
-	pprof -http=localhost:8080 $(BUILD_DIR)/$(BIN_NAME) -source_path=$(BUILD_DIR) http://localhost:6060/debug/pprof/profile
+	go tool pprof -http=localhost:8080 $(BUILD_DIR)/$(BIN_NAME) -source_path=$(BUILD_DIR) http://localhost:6060/debug/pprof/profile
 
 .PHONY: myprofiler
 myprofiler:
